@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#d6336c">
+<title>Looks del viaje · Italia + Suiza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink:#d6336c; --pink-soft:#fce4ec;
+  --ink:#2a2530; --muted:#7a7280; --faint:#a39bab;
+  --line:#ece7e3; --card:#fffdfb; --bg:#f7f3ef;
+  --shadow:0 1px 2px rgba(60,40,55,.04),0 6px 22px rgba(60,40,55,.07);
+  --radius:20px; --radius-sm:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --pink:#ff7aa8; --pink-soft:#34202a;
+    --ink:#f1ecf2; --muted:#a79fb0; --faint:#6f6678;
+    --line:#2b2530; --card:#1b1620; --bg:#120e16;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.4);
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);
+  line-height:1.55;padding-bottom:48px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px}
+
+header{padding:26px 0 8px;text-align:center}
+.kicker{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--pink);font-weight:600}
+h1{font-family:'Fraunces',serif;font-weight:600;font-size:38px;line-height:1.02;margin:6px 0 4px;letter-spacing:-.01em}
+.sub{font-size:13.5px;color:var(--muted)}
+.fav-count{display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:var(--pink-soft);
+  color:var(--pink);font-weight:600;font-size:12.5px;padding:7px 15px;border-radius:999px}
+.fav-count svg{width:14px;height:14px;fill:var(--pink)}
+
+.tabs{position:sticky;top:0;z-index:50;background:var(--bg);padding:12px 0 9px;margin:0 -16px;
+  padding-left:16px;padding-right:16px}
+.tabs-scroll{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.tabs-scroll::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--muted);
+  padding:10px 17px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;
+  white-space:nowrap;transition:.16s;min-height:42px;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.1;font-family:inherit}
+.tab small{font-size:10px;font-weight:500;opacity:.7}
+.tab:hover{border-color:var(--pink);color:var(--pink)}
+.tab.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.panel{display:none;animation:fade .28s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.day-banner{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius-sm);padding:15px 17px;margin:8px 0 18px;box-shadow:var(--shadow)}
+.day-banner .emoji{font-size:30px;flex:0 0 auto}
+.day-banner .meta{flex:1}
+.day-banner .t{font-family:'Fraunces',serif;font-size:20px;font-weight:600;line-height:1.1}
+.day-banner .d{font-size:12.5px;color:var(--muted);margin-top:2px}
+
+.look{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  margin-bottom:16px;box-shadow:var(--shadow);overflow:hidden}
+.look-head{display:flex;align-items:flex-start;gap:14px;padding:18px 18px 12px}
+.figure{flex:0 0 auto;width:62px;height:92px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:var(--fig-bg,#f3eef0)}
+.figure svg{width:54px;height:84px}
+.look-titles{flex:1;min-width:0;padding-top:2px}
+.look-num{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.look-name{font-family:'Fraunces',serif;font-size:21px;font-weight:600;line-height:1.12;margin-top:1px}
+.palette{display:flex;gap:6px;margin-top:9px}
+.swatch{width:22px;height:22px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.fav{flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+  background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.18s}
+.fav svg{width:22px;height:22px;fill:none;stroke:var(--faint);stroke-width:2;transition:.18s}
+.fav:hover{border-color:var(--pink)}
+.fav.on{background:var(--pink-soft);border-color:var(--pink)}
+.fav.on svg{fill:var(--pink);stroke:var(--pink);animation:pop .3s ease}
+@keyframes pop{0%{transform:scale(.6)}55%{transform:scale(1.25)}100%{transform:scale(1)}}
+
+.look-body{padding:0 18px 18px}
+.pieces{display:flex;flex-direction:column;gap:8px;margin-bottom:13px}
+.piece{display:flex;align-items:center;gap:11px;font-size:13.5px}
+.piece .pico{flex:0 0 auto;width:28px;height:28px;border-radius:8px;background:var(--bg);
+  display:flex;align-items:center;justify-content:center}
+.piece .pico svg{width:17px;height:17px;stroke:var(--muted);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.piece b{font-weight:600}
+.piece .plabel{font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;display:block;line-height:1.2}
+.why{background:var(--pink-soft);border-radius:12px;padding:11px 14px;font-size:13px;line-height:1.5;margin-bottom:9px}
+.why b{color:var(--pink)}
+.tip{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:var(--muted)}
+.tip svg{flex:0 0 auto;width:15px;height:15px;stroke:var(--pink);fill:none;stroke-width:2;margin-top:2px}
+.pin-btn{display:inline-flex;align-items:center;gap:8px;margin-top:13px;width:100%;justify-content:center;
+  background:#e60023;color:#fff;border:none;border-radius:12px;padding:12px 16px;font-size:13.5px;
+  font-weight:600;cursor:pointer;text-decoration:none;font-family:inherit;transition:.15s}
+.pin-btn:hover{background:#c5001e}
+.pin-btn svg{width:18px;height:18px;fill:#fff}
+
+.toolbar{display:flex;gap:8px;justify-content:center;margin:22px 0 6px;flex-wrap:wrap}
+.tool-btn{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:9px 16px;
+  border-radius:999px;font-size:12.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:7px;font-family:inherit;transition:.15s}
+.tool-btn:hover{border-color:var(--pink);color:var(--pink)}
+.tool-btn svg{width:15px;height:15px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);
+  color:var(--bg);padding:12px 22px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.25);transition:.3s;z-index:200;opacity:0}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+footer{text-align:center;font-size:11px;color:var(--faint);margin-top:26px;line-height:1.6}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:420px){h1{font-size:32px}.look-name{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Italia + Suiza · 24–27 Junio</div>
+    <h1>Looks del viaje</h1>
+    <div class="sub">5 propuestas para cada día · clima de junio · pensados para caminar</div>
+    <div class="fav-count" id="favCount"></div>
+  </header>
+  <nav class="tabs"><div class="tabs-scroll" id="tabs"></div></nav>
+  <main id="panels"></main>
+  <div class="toolbar">
+    <button class="tool-btn" onclick="showFavs()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.4-9.5-8.5C.8 9.6 2 6 5.2 6c2 0 3.2 1.3 3.8 2.3C9.6 7.3 10.8 6 12.8 6 16 6 17.2 9.6 15.5 12.5 13 16.6 12 21 12 21z"/></svg>
+      Ver favoritos
+    </button>
+    <button class="tool-btn" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+      Imprimir
+    </button>
+    <button class="tool-btn" onclick="resetFavs()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8m0-5v5h5"/></svg>
+      Limpiar favoritos
+    </button>
+  </div>
+  <footer>Tus favoritos se guardan en este dispositivo · Toca el corazón para marcar los que más te gusten</footer>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const KEY='outfits_italia_2026';
+let favs={}; try{favs=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){favs={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(favs))}catch(e){}}
+
+/* ---- garment icons (SVG paths) ---- */
+const ICON={
+  vestido:'<path d="M8 3l1.5 3L12 4l2.5 2L16 3M7 21h10l-1-8-2-5h-4l-2 5z"/>',
+  top:'<path d="M6 4l3-1 3 2 3-2 3 1 1 4-3 1v9H8v-9L5 8z"/>',
+  pantalon:'<path d="M7 3h10l-1 18h-4l-1-9-1 9H6z"/>',
+  falda:'<path d="M8 3h8l-1 5H9zM7 8h10l2 12H5z"/>',
+  mono:'<path d="M7 3l2 3 3-1 3 1 2-3-1 18h-3l-1-8-1 8H8z"/>',
+  zapato:'<path d="M3 16h12l5 2v2H3zM3 16l1-4h4l2 2"/>',
+  bolso:'<path d="M5 9h14l-1 11H6zM8 9V6a4 4 0 0 1 8 0v3"/>',
+  capa:'<path d="M12 3l-7 4 2 3v11h10V10l2-3zM9 7l3 2 3-2"/>',
+  accesorio:'<circle cx="12" cy="8" r="5"/><path d="M9 12l-2 9M15 12l2 9"/>',
+  panuelo:'<path d="M4 7l8-3 8 3-8 14z"/>',
+  sombrero:'<path d="M3 17c2-1 14-1 18 0M7 17C7 9 9 5 12 5s5 4 5 12"/>'
+};
+function pico(type){return `<span class="pico"><svg viewBox="0 0 24 24">${ICON[type]||ICON.accesorio}</svg></span>`}
+
+/* ---- simple "figurine" silhouette tinted with the look's dominant colors ---- */
+function figurine(colors){
+  const top=colors[1]||colors[0], bottom=colors[2]||colors[0], acc=colors[0];
+  return `<svg viewBox="0 0 60 90" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="30" cy="11" r="7" fill="#e9d9c9"/>
+    <path d="M30 5c-5 0-7 4-7 7 0-1 14-1 14 0 0-3-2-7-7-7z" fill="${acc}"/>
+    <path d="M22 20c2-2 14-2 16 0l-2 22h-12z" fill="${top}"/>
+    <path d="M24 42h12l3 36h-7l-2-22-2 22h-7z" fill="${bottom}"/>
+    <rect x="26" y="78" width="7" height="5" rx="1.5" fill="#5a4a3a"/>
+    <rect x="33" y="78" width="7" height="5" rx="1.5" fill="#5a4a3a"/>
+  </svg>`;
+}
+
+/* ============ DATA ============ */
+const DAYS=[
+ {id:'d24', tab:'24', tabsub:'Milán', emoji:'🏛️',
+  title:'Milán · ciudad y Duomo', desc:'~28 °C, soleado · catedral, paseo urbano, cena en Navigli',
+  figbg:'#f6ecec',
+  looks:[
+   {name:'Domingo en Brera', pin:'coral linen wide leg pants summer outfit', colors:['#e8573a','#ffd23f','#1b9e77'],
+    pieces:[['top','Blusa fluida','coral teja sin mangas'],['pantalon','Pantalón ancho','crudo de lino'],['zapato','Sandalias planas','de tira, doradas'],['bolso','Bolso','de rafia natural']],
+    why:'El <b>coral sobre crudo</b> es luminoso para 28 °C y el pantalón ancho estiliza aún más tu altura.',
+    tip:'Sandalia plana cerrada por delante: aguanta el día caminando por la ciudad.'},
+   {name:'Hombros para el Duomo', pin:'cobalt blue midi shirt dress silk scarf outfit', colors:['#3b6ea5','#ffffff','#f4c430'],
+    pieces:[['vestido','Vestido midi camisero','azul klein'],['panuelo','Pañuelo de seda','amarillo, para hombros'],['zapato','Bailarinas','blancas'],['bolso','Bandolera','pequeña amarilla']],
+    why:'Pensado para <b>entrar a la catedral</b>: el pañuelo cubre hombros y aporta un golpe de color al azul.',
+    tip:'Lleva el pañuelo en el bolso y póntelo justo antes de entrar a la iglesia.'},
+   {name:'Aperitivo en technicolor', pin:'fuchsia jumpsuit kimono summer night outfit', colors:['#d6336c','#ff922b','#7048e8'],
+    pieces:[['vestido','Mono sin mangas','fucsia'],['capa','Kimono corto','estampado naranja'],['zapato','Sandalias de cuña baja','tostadas'],['accesorio','Pendientes','aro dorado']],
+    why:'Un <b>mono fucsia</b> alarga la figura de arriba a abajo; ideal para la cena en los Navigli.',
+    tip:'Cuña baja, no tacón fino: los Navigli tienen adoquines junto al canal.'},
+   {name:'Limonero milanés', pin:'yellow top green pleated midi skirt outfit', colors:['#ffd23f','#1b9e77','#ffffff'],
+    pieces:[['top','Top de punto fino','amarillo limón'],['falda','Falda midi plisada','verde botella'],['zapato','Zapatillas blancas','minimal'],['sombrero','Gorra de lino','crudo']],
+    why:'<b>Amarillo y verde</b> en bloque de color, fresco y muy fotogénico bajo el sol de Milán.',
+    tip:'Zapatilla blanca para el máximo de kilómetros sin sufrir.'},
+   {name:'Galleria glam', pin:'violet wrap dress blazer evening outfit', colors:['#7048e8','#e8573a','#ffd23f'],
+    pieces:[['vestido','Vestido cruzado','violeta'],['capa','Blazer ligero','sin forro, teja'],['zapato','Mules planas','metalizadas'],['bolso','Clutch','amarillo']],
+    why:'El cruzado marca cintura y la <b>combinación violeta-teja</b> es vibrante para la noche.',
+    tip:'El blazer ligero da un toque pulido para la cena y abriga si refresca de noche.'}
+  ]},
+ {id:'d25', tab:'25', tabsub:'Como', emoji:'⛵',
+  title:'Lago di Como · Varenna + Bellagio', desc:'~25 °C · pueblos del lago, jardines, ferry, atardecer',
+  figbg:'#e9f0ee',
+  looks:[
+   {name:'Riviera en flor', pin:'turquoise floral maxi dress straw hat summer', colors:['#2bb3c0','#ff922b','#ffffff'],
+    pieces:[['vestido','Maxi vestido','estampado floral turquesa'],['zapato','Sandalias planas','de cuerda'],['sombrero','Pamela','de paja'],['bolso','Capazo','blanco']],
+    why:'Un <b>maxi vestido</b> es justo lo que tu altura luce mejor, y vuela precioso en el ferry.',
+    tip:'Suela plana de cuerda: perfecta para las cuestas empedradas de Varenna.'},
+   {name:'Bellagio cítrico', pin:'orange blouse white culottes summer outfit', colors:['#ff922b','#ffd23f','#1b9e77'],
+    pieces:[['top','Blusa anudada','naranja'],['pantalon','Pantalón culotte','blanco'],['zapato','Alpargatas planas','verdes'],['accesorio','Gafas de sol','carey']],
+    why:'<b>Naranja sobre blanco</b> grita verano italiano; el culotte es fresco y cómodo para el ferry.',
+    tip:'Alpargata de suela fina y flexible para los adoquines de Bellagio.'},
+   {name:'Jardín de Villa Melzi', pin:'jade green midi dress cardigan summer outfit', colors:['#1b9e77','#f4c430','#ff6b9d'],
+    pieces:[['vestido','Vestido midi vuelo','verde jade'],['capa','Cárdigan fino','rosa, por si refresca'],['zapato','Sandalias planas','doradas'],['bolso','Bolso pequeño','rosa']],
+    why:'El <b>verde jade</b> resalta entre los jardines y favorece muchísimo a una piel bronceada.',
+    tip:'Cárdigan fino en el bolso para la sombra de los jardines o la brisa del lago.'},
+   {name:'Atardecer Aperol', pin:'coral ombre halter maxi dress sunset outfit', colors:['#e8573a','#ff922b','#ffd23f'],
+    pieces:[['vestido','Vestido halter largo','degradado coral-naranja'],['zapato','Sandalias planas','tostadas'],['accesorio','Pendientes largos','dorados'],['panuelo','Pañuelo','para el pelo']],
+    why:'Los <b>tonos cálidos</b> del vestido se funden con el atardecer sobre el lago en Varenna.',
+    tip:'Halter para lucir espalda al sol; lleva el pañuelo por si sopla viento en el muelle.'},
+   {name:'Marinera de color', pin:'breton stripe top pink midi skirt outfit', colors:['#1864ab','#ffffff','#ff6b9d'],
+    pieces:[['top','Camiseta de rayas','azul y blanco'],['falda','Falda midi','rosa chicle'],['zapato','Mocasines','planos blancos'],['bolso','Bandolera','azul']],
+    why:'La raya marinera con <b>falda rosa</b> es un guiño chic a la vida de lago, juvenil y con color.',
+    tip:'Mocasín plano: sujeción y comodidad para el día entero de barco y paseo.'}
+  ]},
+ {id:'d26', tab:'26', tabsub:'St. Moritz', emoji:'🚂',
+  title:'Bernina + St. Moritz', desc:'Tirano ~24 °C → Alpes ~15 °C y viento · ¡lleva capas!',
+  figbg:'#e7ecf3',
+  looks:[
+   {name:'Alpes en color', pin:'fuchsia knit dress denim jacket outfit', colors:['#d6336c','#1864ab','#ffffff'],
+    pieces:[['vestido','Vestido midi punto','fucsia'],['capa','Chaqueta vaquera','azul, imprescindible'],['zapato','Zapatillas','blancas'],['bolso','Mochila pequeña','para el tren']],
+    why:'Vestido cómodo para el tren y <b>chaqueta vaquera</b> que te salva del frío de St. Moritz.',
+    tip:'La vaquera se quita fácil en Tirano (24 °C) y se pone arriba (15 °C).'},
+   {name:'Mostaza alpina', pin:'mustard sweater jeans green cardigan autumn outfit', colors:['#f4c430','#5c4033','#1b9e77',],
+    pieces:[['top','Jersey fino','mostaza'],['pantalon','Vaqueros','rectos'],['capa','Cárdigan grueso','verde'],['zapato','Botines planos','marrones']],
+    why:'<b>Mostaza y verde</b> dan calidez visual; el cárdigan grueso es tu capa para la altura.',
+    tip:'Botín plano cómodo para el paseo junto al lago alpino, a veces con suelo irregular.'},
+   {name:'Roja como el tren', pin:'red turtleneck chino pants blazer outfit', colors:['#e03131','#ffffff','#1864ab'],
+    pieces:[['top','Jersey de cuello alto','rojo Bernina'],['pantalon','Pantalón chino','crudo'],['capa','Blazer de lana ligero','azul'],['zapato','Zapatillas','blancas']],
+    why:'Un <b>rojo vivo</b> hace juego con el tren rojo del Bernina y destaca en las fotos de nieve.',
+    tip:'Capas finas que se superponen: jersey + blazer regulan bien el cambio de temperatura.'},
+   {name:'Lavanda de montaña', pin:'lilac knit dress lavender coat outfit', colors:['#7048e8','#b197fc','#ffffff'],
+    pieces:[['vestido','Vestido punto manga larga','lila'],['capa','Abrigo fino','malva'],['zapato','Botas planas','blancas'],['accesorio','Bufanda fina','lavanda']],
+    why:'Gama <b>lila monocolor</b> elegante y abrigada; la manga larga ya cubre para el viento.',
+    tip:'Bufanda fina enrollada: ocupa nada en el bolso y abriga el cuello en altura.'},
+   {name:'Verde abeto', pin:'forest green sweatshirt cargo pants puffer vest outfit', colors:['#1b6b50','#ffd23f','#5c4033'],
+    pieces:[['top','Sudadera bonita','verde abeto'],['pantalon','Pantalón cargo','beige'],['capa','Chaleco acolchado','amarillo'],['zapato','Zapatillas trail','cómodas']],
+    why:'Look <b>outdoor con color</b>: cómodo para el día largo de tren y abrigado con el chaleco.',
+    tip:'El chaleco acolchado abriga el torso sin estorbar para subir y bajar del tren.'}
+  ]},
+ {id:'d27', tab:'27', tabsub:'Regreso', emoji:'✈️',
+  title:'Regreso · Tirano → Milán → vuelo', desc:'Día de trenes y aeropuerto · cómodo pero mono, fácil con maletas',
+  figbg:'#f1ecdf',
+  looks:[
+   {name:'Aeropuerto en coral', pin:'coral knit jumpsuit airport travel outfit', colors:['#e8573a','#ffffff','#ffd23f'],
+    pieces:[['mono','Mono de punto','coral, cómodo'],['capa','Cárdigan largo','crudo'],['zapato','Zapatillas','blancas'],['bolso','Bandolera','manos libres']],
+    why:'Un <b>mono de punto</b> es como ir en pijama pero se ve estiloso para el aeropuerto.',
+    tip:'Bandolera cruzada para tener las manos libres con la maleta.'},
+   {name:'Viaje soleado', pin:'yellow tshirt navy joggers denim shirt travel outfit', colors:['#ffd23f','#1864ab','#ffffff'],
+    pieces:[['top','Camiseta','amarilla'],['pantalon','Pantalón jogger chic','azul marino'],['capa','Sobrecamisa','vaquera'],['zapato','Zapatillas','blancas']],
+    why:'<b>Amarillo y azul</b> dan energía a un día de viaje; el jogger chic es comodísimo en el tren.',
+    tip:'Sobrecamisa vaquera para el aire acondicionado del tren y del avión.'},
+   {name:'Rosa cómodo', pin:'pink t-shirt dress comfy travel outfit', colors:['#ff6b9d','#5c4033','#ffffff'],
+    pieces:[['vestido','Vestido camiseta','rosa'],['capa','Chaqueta de chándal bonita','crudo'],['zapato','Zapatillas','blancas'],['bolso','Riñonera','marrón']],
+    why:'El <b>vestido camiseta</b> no se arruga y es perfecto para 2h30 de tren sin perder estilo.',
+    tip:'Riñonera para el pasaporte y la tarjeta de embarque a mano.'},
+   {name:'Verde viajero', pin:'green knit polo white wide pants outfit', colors:['#1b9e77','#ffffff','#ffd23f'],
+    pieces:[['top','Polo de punto','verde'],['pantalon','Pantalón ancho','blanco'],['zapato','Mocasines planos','cómodos'],['accesorio','Pañuelo','amarillo al cuello']],
+    why:'Look pulido en <b>verde y blanco</b>, fresco para Milán y resultón para el aeropuerto.',
+    tip:'Pantalón ancho que no aprieta en el vuelo y favorece tu altura.'},
+   {name:'Última foto', pin:'fuchsia midi dress white denim jacket outfit', colors:['#d6336c','#ffd23f','#ffffff'],
+    pieces:[['vestido','Vestido midi vuelo','fucsia'],['capa','Chaqueta vaquera','blanca'],['zapato','Zapatillas','blancas'],['bolso','Bolso saco','amarillo']],
+    why:'Para despedirse con una <b>foto en color</b> en Milano Centrale antes de volar.',
+    tip:'Vaquera blanca ligera: estiliza, abriga lo justo y vale para la cabina del avión.'}
+  ]}
+];
+
+/* ============ RENDER ============ */
+function lookHTML(dayId, i, lk, figbg){
+  const id=dayId+'_'+i, on=!!favs[id];
+  const sw=lk.colors.map(c=>`<span class="swatch" style="background:${c}"></span>`).join('');
+  const pieces=lk.pieces.map(p=>`<div class="piece">${pico(p[0])}<div><b>${p[1]}</b> <span class="plabel">${p[2]}</span></div></div>`).join('');
+  return `<div class="look">
+    <div class="look-head">
+      <div class="figure" style="--fig-bg:${figbg}">${figurine(lk.colors)}</div>
+      <div class="look-titles">
+        <div class="look-num">Look ${i+1}</div>
+        <div class="look-name">${lk.name}</div>
+        <div class="palette">${sw}</div>
+      </div>
+      <button class="fav${on?' on':''}" id="fav-${id}" aria-label="Favorito" onclick="toggle('${id}')">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.5-8.5C.8 9.6 2 6 5.2 6c2 0 3.2 1.3 3.8 2.3C9.6 7.3 10.8 6 12.8 6 16 6 17.2 9.6 15.5 12.5 13 16.6 12 21 12 21z"/></svg>
+      </button>
+    </div>
+    <div class="look-body">
+      <div class="pieces">${pieces}</div>
+      <div class="why">${lk.why}</div>
+      <div class="tip"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2zM9 21h6M10 17v4M14 17v4"/></svg><span>${lk.tip}</span></div>
+      <a class="pin-btn" href="https://www.pinterest.com/search/pins/?q=${encodeURIComponent(lk.pin)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.2 2.6 7.8 6.3 9.2-.1-.8-.2-2 0-2.8l1.1-4.7s-.3-.6-.3-1.4c0-1.3.8-2.3 1.7-2.3.8 0 1.2.6 1.2 1.3 0 .8-.5 2-.8 3.1-.2.9.5 1.7 1.4 1.7 1.6 0 2.9-1.7 2.9-4.2 0-2.2-1.6-3.7-3.8-3.7-2.6 0-4.1 1.9-4.1 3.9 0 .8.3 1.6.7 2.1.1.1.1.2 0 .3l-.3 1.1c0 .2-.1.2-.3.1-1.2-.6-2-2.3-2-3.7 0-3 2.2-5.8 6.3-5.8 3.3 0 5.9 2.4 5.9 5.5 0 3.3-2.1 6-5 6-1 0-1.9-.5-2.2-1.1l-.6 2.3c-.2.8-.8 1.9-1.2 2.5.9.3 1.9.4 2.9.4 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+        Ver ejemplos en Pinterest
+      </a>
+    </div>
+  </div>`;
+}
+
+function build(){
+  document.getElementById('tabs').innerHTML = DAYS.map((d,i)=>
+    `<button class="tab${i===0?' active':''}" data-tab="${d.id}" onclick="go('${d.id}')">${d.emoji} ${d.tab}<small>${d.tabsub}</small></button>`).join('');
+  document.getElementById('panels').innerHTML = DAYS.map((d,di)=>`
+    <section class="panel${di===0?' active':''}" id="panel-${d.id}">
+      <div class="day-banner"><div class="emoji">${d.emoji}</div><div class="meta"><div class="t">${d.title}</div><div class="d">${d.desc}</div></div></div>
+      ${d.looks.map((lk,i)=>lookHTML(d.id,i,lk,d.figbg)).join('')}
+    </section>`).join('');
+  updateCount();
+}
+function go(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  const b=document.querySelector(`.tab[data-tab="${id}"]`);
+  b.classList.add('active'); b.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggle(id){
+  favs[id]=!favs[id]; if(!favs[id])delete favs[id]; save();
+  document.getElementById('fav-'+id).classList.toggle('on',!!favs[id]);
+  updateCount();
+}
+function updateCount(){
+  const n=Object.keys(favs).length;
+  document.getElementById('favCount').innerHTML =
+    `<svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-9.5-8.5C.8 9.6 2 6 5.2 6c2 0 3.2 1.3 3.8 2.3C9.6 7.3 10.8 6 12.8 6 16 6 17.2 9.6 15.5 12.5 13 16.6 12 21 12 21z"/></svg> ${n} ${n===1?'look favorito':'looks favoritos'}`;
+}
+function showFavs(){
+  const names=[];
+  DAYS.forEach(d=>d.looks.forEach((lk,i)=>{ if(favs[d.id+'_'+i]) names.push(`${d.emoji} ${lk.name}`); }));
+  if(!names.length){ showToast('Aún no has marcado favoritos'); return; }
+  showToast(names.length+' favoritos: '+names.join(' · '));
+}
+function resetFavs(){
+  if(!Object.keys(favs).length){showToast('No hay favoritos que limpiar');return;}
+  if(!confirm('¿Quitar todos los favoritos?'))return;
+  favs={};save();
+  document.querySelectorAll('.fav').forEach(f=>f.classList.remove('on'));
+  updateCount();showToast('Favoritos vacíos');
+}
+let tt;
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3200);}
+build();
+</script>
+</body>
+</html>
